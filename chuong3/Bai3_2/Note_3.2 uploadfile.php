@@ -30,7 +30,9 @@
 			echo '<div style="float:left; border:1px solid
 			c9c9c9; padding:10px; height: 300px; margin: 5px;">';
 // ==========// PHẦN 5: TẠO TÊN FILE MỚI // ========================================== 
-/* pathinfo(..., PATHINFO_FILENAME): Lấy tên file KHÔNG bao gồm phần mở rộng. Ví dụ: abc.jpg => abc rand(100,999): Tạo một số ngẫu nhiên từ 100 đến 999. Ghép lại: abc_572 */
+/* pathinfo(..., PATHINFO_FILENAME): Lấy tên file KHÔNG bao gồm phần mở rộng. 
+Ví dụ: abc.jpg => abc rand(100,999): 
+Tạo một số ngẫu nhiên từ 100 đến 999. Ghép lại: abc_572 */
 			$name_new=pathinfo($_FILES["file"]["name"][$i],PATHINFO_FILENAME) ."_".rand(100,999);
 			/* PATHINFO_EXTENSION: Lấy phần mở rộng của file. Ví dụ: abc.jpg => jpg anh.png => png */
 			$ext=pathinfo($_FILES["file"]["name"][$i],PATHINFO_EXTENSION);
@@ -41,27 +43,31 @@
 				echo "Tên file ban đầu: ".$_FILES["file"]["name"][$i];
 				/* Hiển thị tên file mới sau khi đổi tên. */
 				echo "<br />Tên file thay đổi:".$filename_new;
-				/* $_FILES["file"]["size"][$i]: Lấy kích thước file tính bằng BYTE. /1024: Đổi từ Byte 								                sang KB. round(): Làm tròn số KB. */
+				/* $_FILES["file"]["size"][$i]: Lấy kích thước file tính bằng BYTE. /1024: 
+				Đổi từ Byte sang KB. round(): Làm tròn số KB. */
 				echo "<br />Kích thước: ".round($_FILES["file"]["size"][$i]/1024)."KB";
 				/* $_FILES["file"]["type"][$i]: Lấy MIME type của file. Ví dụ: image/jpeg image/png */
 				echo "<br />Loại file:".$_FILES["file"]["type"][$i];
-				/* $_FILES["file"]["tmp_name"][$i]: Đây là đường dẫn đến file tạm mà PHP tạo ra trong                quá trình upload. */
+				/* $_FILES["file"]["tmp_name"][$i]: Đây là đường dẫn đến file tạm mà PHP tạo ra trong quá trình upload. */
 				echo "<br /> Tên file tạm: ".$_FILES["file"]["tmp_name"][$i];
 				// ============== // PHẦN 7: XÁC ĐỊNH NƠI LƯU FILE // =================
 				/* $targetFile: Là đường dẫn cuối cùng mà file sẽ được lưu. "hinhanh/": Thư mục dùng để 								                chứa file upload. Ví dụ: hinhanh/abc_572.jpg */
 				echo "<br />Nơi lưu trữ: ".$targetFile="hinhanh/".$filename_new;
 				echo "<p />";
 				// ==================== // PHẦN 8: KIỂM TRA LỖI UPLOAD // =======
-				/* $_FILES["file"]["error"][$i]: Chứa mã lỗi của quá trình upload. Nếu > 0: Có lỗi xảy                ra. Nếu == 0: Upload thành công, không có lỗi. */
+				/* $_FILES["file"]["error"][$i]: Chứa mã lỗi của quá trình upload. 
+				Nếu > 0: Có lỗi xảy ra. Nếu == 0: Upload thành công, không có lỗi. */
 				if($_FILES["file"]["error"][$i]>0)
 				echo "Lỗi trong quá trình upload";
 				else
-				/* move_uploaded_file(): Di chuyển file từ thư mục tạm của PHP sang thư mục "hinhanh".                Tham số 1: Đường dẫn file tạm. Tham số 2: Nơi muốn lưu file. Đây là dòng QUAN TRỌNG nhất                để file thực sự được lưu vào server. */
+				/* move_uploaded_file(): Di chuyển file từ thư mục tạm của PHP sang thư mục "hinhanh".
+				Tham số 1: Đường dẫn file tạm. Tham số 2: Nơi muốn lưu file. Đây là dòng QUAN TRỌNG nhất 
+				để file thực sự được lưu vào server. */
 				move_uploaded_file($_FILES["file"]["tmp_name"][$i],$targetFile="hinhanh/".$filename_new);
 				// ============ // PHẦN 9: KIỂM TRA FILE CÓ PHẢI ẢNH KHÔNG // ===================
 				/* $ext: Phần mở rộng của file. Nếu là: png jpg gif thì hiển thị ảnh. */
 				if($ext=='png' || $ext=='jpg' || $ext=='gif' )
-				/* <img src="...">: Hiển thị hình ảnh trên trình duyệt. width="200": Đặt chiều rộng ảnh                là 200px. */
+				/* <img src="...">: Hiển thị hình ảnh trên trình duyệt. width="200": Đặt chiều rộng ảnh là 200px. */
 				echo '<img src="hinhanh/'.$filename_new.'" width="200">';
 				else
 					echo 'Không phải file ảnh';
