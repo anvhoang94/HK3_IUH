@@ -27,11 +27,12 @@
 				echo "<br />Loại
 			file:".$_FILES["file"]["type"][$i];
 				echo "<br /> Tên file tạm: ".$_FILES["file"]["tmp_name"][$i];
+				echo "<br />Nơi lưu trữ: ".$targetFile="hinhanh/".$filename_new;
 				echo "<p />";
 				if($_FILES["file"]["error"][$i]>0)
 				echo "Lỗi trong quá trình upload";
 				else
-				move_uploaded_file($_FILES["file"]["tmp_name"][$i],"hinhanh/".$filename_new);
+				move_uploaded_file($_FILES["file"]["tmp_name"][$i],$targetFile="hinhanh/".$filename_new);
 				if($ext=='png' || $ext=='jpg' || $ext=='gif' )
 				echo '<img src="hinhanh/'.$filename_new.'" width="200">';
 				else
