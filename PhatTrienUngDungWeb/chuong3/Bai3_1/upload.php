@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" enctype="multipart/form-data">
+<p>
+<input type="file" name="fileUpload" id="fileUpload" value="Choose File"> 
+No File Chosen                 
+      <input type="submit" name="submit" id="submit" value="Upload file">
+</p>
+<p>Kết quả sau khi Upload File</p>
+<?php
+if (isset($_FILES['fileUpload'])) {
+    echo "<pre>";
+    var_dump($_FILES['fileUpload']);
+    echo "</pre>";
+}
+?>
+</form>
+</body>
+</html>
