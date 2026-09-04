@@ -6,13 +6,14 @@ error_reporting(0);
 <html>
 <head>
 <meta charset="utf-8">
-<title>Session trong PHP</title>
+<title>Untitled Document</title>
 </head>
 <?php
-if(isset($_POST["sbgan"]))
+if(isset($_POST['sbgan']))
 {
-	$_SESSION["ThongTin"]=$_POST["txtthongtin"];
+	$_SESSION['ThongTin']=$_POST['txtthongtin'];
 }
+
 ?>
 <body>
 <form method="post">
@@ -24,17 +25,16 @@ if(isset($_POST["sbgan"]))
  </tr>
 </table>
 </form>
-<h3>
+
 <?php
 if($_SESSION["ThongTin"])
 {
-	echo "Giá trị biến session là: ".$_SESSION["ThongTin"].". <a href='logout.php'>Đăng xuất </a>";	
+	echo "Giá trị biến session là: ".$_SESSION["ThongTin"].". <a href='dangxuat.php'>Đăng xuất </a>";	
 }
 else
 {
 	echo "Giá trị biến session chưa được gán";	
 }
-?>
-</h3>
+?>	
 </body>
 </html>

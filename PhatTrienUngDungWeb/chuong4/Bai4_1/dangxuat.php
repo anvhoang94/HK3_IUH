@@ -1,4 +1,5 @@
-<?php
+<?php /*?><?php
+session_start();
 error_reporting(0);
 ?>
 <!doctype html>
@@ -21,4 +22,14 @@ else
 </h3>
 <body>
 </body>
-</html>
+</html> <?php */?>
+<?php
+session_start();
+// Thực hiện hủy session khi người dùng bấm Đăng xuất
+unset($_SESSION['ThongTin']);
+session_destroy();
+
+// Điều hướng về trang session.php
+header("Location: session.php");
+exit();
+?>
