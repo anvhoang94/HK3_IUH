@@ -1,0 +1,351 @@
+1. File style.css (Thêm 2 class CSS ở Bước 1)
+Thêm 2 dòng sau vào cuối file style.css của bạn:
+
+CSS
+header.bg_green { background: green !important; }
+header.bg_red { background: red !important; }
+
+2. File dangky.php (Đổi Value checkbox & Thiết lập Cookie)
+Bước 2: Đổi value của Màu xanh thành bg_green, Màu đỏ thành bg_red.
+Bước 3: Lưu Cookie bgcolor sống trong 10 ngày khi bấm Đăng ký.
+Bước 4: Thêm class="<?php echo isset($_COOKIE['bgcolor']) ? $_COOKIE['bgcolor'] : ''; ?>" vào thẻ <header>.
+
+code dangky.php
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Đăng Ký</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="<?php echo isset($_COOKIE['bgcolor']) ? $_COOKIE['bgcolor'] : ''; ?>">
+        <h2>BANNER WEBSITE</h2>
+    </header>
+
+    <div class="main">
+        <nav>
+            <b>Menu</b><br><br>
+            <a href="trangchu.php">Trang chủ</a><br>
+            <a href="dangky.php">Đăng ký</a><br>
+            <a href="dangnhap.php">Đăng nhập</a>
+        </nav>
+
+        <div class="content">
+            <h3 style="text-align: center;">THÔNG TIN ĐĂNG KÝ</h3>
+
+            <form action="" method="post">
+                <table border="0" cellpadding="5">
+                    <tr>
+                        <td colspan="2"><b>Thông tin tài khoản</b></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="email" name="txtemail" required></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" name="txtpass" required></td>
+                    </tr>
+                    <tr>
+                        <td>Nhập lại password</td>
+                        <td><input type="password" name="txtrepass" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Thông tin cá nhân</b></td>
+                    </tr>
+                    <tr>
+                        <td>Họ tên</td>
+                        <td><input type="text" name="txthoten" required></td>
+                    </tr>
+                    <tr>
+                        <td>Quê quán</td>
+                        <td>
+                            <select name="slquequan">
+                                <option value="Chọn Tỉnh/Thành phố">Chọn Tỉnh/Thành phố</option>
+                                <option value="Hà Nội">Hà Nội</option>
+                                <option value="TP.HCM">TP.HCM</option>
+                                <option value="Đà Nẵng">Đà Nẵng</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Điện thoại</td>
+                        <td><input type="text" name="txtdienthoai" required></td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính</td>
+                        <td>
+                            <input type="radio" name="rdgioitinh" value="Nam" checked> Nam
+                            <input type="radio" name="rdgioitinh" value="Nữ"> Nữ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sở thích</td>
+                        <td>
+                            <!-- Bước 2: Đặt value tương ứng với tên class CSS -->
+                            <input type="checkbox" name="chkthich[]" value="bg_green"> Màu xanh
+                            <input type="checkbox" name="chkthich[]" value="bg_red"> Màu đỏ
+                            <input type="checkbox" name="chkthich[]" value="Đồng quê"> Đồng quê
+                            <input type="checkbox" name="chkthich[]" value="Cao nguyên"> Cao nguyên
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" name="sbdangky" value="Đăng ký">
+                            <input type="reset" value="Làm lại">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            <?php
+            if (isset($_POST['sbdangky'])) {
+                $email = $_POST['txtemail'];
+                $pass = $_POST['txtpass'];
+                $repass = $_POST['txtrepass'];
+                $hoten = $_POST['txthoten'];
+                $quequan = $_POST['slquequan'];
+                $dienthoai = $_POST['txtdienthoai'];
+                $gioitinh = isset($_POST['rdgioitinh']) ? $_POST['rdgioitinh'] : '';
+
+                // Xử lý sở thích & kiểm tra chọn màu sắc để lưu Cookie
+                $selected_bg = "";
+                $sothich_arr = array();
+
+                if (isset($_POST['chkthich']) && is_array($_POST['chkthich'])) {
+                    foreach ($_POST['chkthich'] as $item) {
+                        if ($item === 'bg_green') {
+                            $selected_bg = 'bg_green';
+                            $sothich_arr[] = "Màu xanh";
+                        } elseif ($item === 'bg_red') {
+                            $selected_bg = 'bg_red';
+                            $sothich_arr[] = "Màu đỏ";
+                        } else {
+                            $sothich_arr[] = $item;
+                        }
+                    }
+                }
+                $sothich = implode(", ", $sothich_arr);
+
+                if ($pass !== $repass) {
+                    echo "<p style='color: red; font-weight: bold;'>Mật khẩu nhập lại không khớp!</p>";
+                } else {
+                    // Bước 3: Lưu Cookie màu nền trong 10 ngày (10 * 24 * 3600 giây)
+                    if ($selected_bg !== "") {
+                        setcookie("bgcolor", $selected_bg, time() + (10 * 24 * 3600), "/");
+                    } else {
+                        // Nếu không chọn màu xanh/đỏ thì xóa cookie màu nền cũ nếu có
+                        setcookie("bgcolor", "", time() - 3600, "/");
+                    }
+
+                    // Lưu tài khoản vào Session
+                    if (!isset($_SESSION['users_list']) || !is_array($_SESSION['users_list'])) {
+                        $_SESSION['users_list'] = array();
+                    }
+
+                    $_SESSION['users_list'][$email] = array(
+                        'email' => $email,
+                        'password' => $pass,
+                        'hoten' => $hoten,
+                        'quequan' => $quequan,
+                        'dienthoai' => $dienthoai,
+                        'gioitinh' => $gioitinh,
+                        'sothich' => $sothich,
+                        'bgcolor' => $selected_bg
+                    );
+
+                    header("Location: dangnhap.php?status=registered");
+                    exit();
+                }
+            }
+            ?>
+        </div>
+    </div>
+
+    <footer>
+        Footer website
+    </footer>
+</div>
+
+</body>
+</html>
+
+3. File dangnhap.php (Cập nhật Cookie khi Đăng nhập lại)
+Khi người dùng đăng nhập lại, hệ thống sẽ khôi phục màu Header theo thông tin tài khoản đó đã lưu.
+
+PHP
+<?php
+session_start();
+
+if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
+    header("Location: trangchu.php");
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Đăng Nhập</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Bước 4: Khai báo class cho Header từ Cookie -->
+    <header class="<?php echo isset($_COOKIE['bgcolor']) ? $_COOKIE['bgcolor'] : ''; ?>">
+        <h2>BANNER WEBSITE</h2>
+    </header>
+
+    <div class="main">
+        <nav>
+            <b>Menu</b><br><br>
+            <a href="trangchu.php">Trang chủ</a><br>
+            <a href="dangky.php">Đăng ký</a><br>
+            <a href="dangnhap.php">Đăng nhập</a>
+        </nav>
+
+        <div class="content">
+            <h3 style="text-align: center;">THÔNG TIN ĐĂNG NHẬP</h3>
+
+            <?php if (isset($_GET['status']) && $_GET['status'] == 'registered'): ?>
+                <p style="color: green; font-weight: bold; text-align: center;">
+                    Đăng ký thành công! Mời bạn đăng nhập tài khoản vừa tạo.
+                </p>
+            <?php endif; ?>
+
+            <form id="form1" name="form1" method="post" action="">
+                <table border="0" cellpadding="5">
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="email" name="textemail" id="textemail" required></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" name="textpassword" id="textpassword" required></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" name="sbdangnhap" id="sbdangnhap" value="Đăng nhập">
+                            <input type="reset" name="button2" id="button2" value="Làm lại">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            <hr>
+
+            <?php
+            if (isset($_POST['sbdangnhap'])) {
+                $email = $_POST['textemail'];
+                $password = $_POST['textpassword'];
+
+                $users = isset($_SESSION['users_list']) ? $_SESSION['users_list'] : array();
+
+                if (isset($users[$email]) && $users[$email]['password'] === $password) {
+                    $_SESSION['is_logged_in'] = true;
+                    $_SESSION['current_user'] = $users[$email];
+
+                    // Khôi phục lại Cookie màu sắc tương ứng với tài khoản đăng nhập
+                    if (!empty($users[$email]['bgcolor'])) {
+                        setcookie("bgcolor", $users[$email]['bgcolor'], time() + (10 * 24 * 3600), "/");
+                    } else {
+                        setcookie("bgcolor", "", time() - 3600, "/");
+                    }
+
+                    header("Location: trangchu.php");
+                    exit();
+                } else {
+                    echo "<p style='color: red; font-weight: bold;'>Đăng nhập thất bại! Email hoặc mật khẩu không đúng.</p>";
+                }
+            }
+            ?>
+        </div>
+    </div>
+
+    <footer>
+        Footer website
+    </footer>
+</div>
+
+</body>
+</html>
+
+4. File trangchu.php (Đổi class Header theo Cookie)
+PHP
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Chủ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Bước 4: Khai báo class cho Header từ Cookie -->
+    <header class="<?php echo isset($_COOKIE['bgcolor']) ? $_COOKIE['bgcolor'] : ''; ?>">
+        <h2>BANNER WEBSITE</h2>
+    </header>
+
+    <div class="main">
+        <nav>
+            <b>Menu</b><br><br>
+            <a href="trangchu.php">Trang chủ</a><br>
+            <a href="dangky.php">Đăng ký</a><br>
+            <a href="dangnhap.php">Đăng nhập</a>
+        </nav>
+
+        <div class="content">
+            <h3 style="text-align: center;">CHÀO MỪNG ĐẾN VỚI TRANG CHỦ</h3>
+            
+            <?php if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true && isset($_SESSION['current_user'])): ?>
+                <?php $info = $_SESSION['current_user']; ?>
+                <h4 style="color: green;">THÔNG TIN TÀI KHOẢN VỪA ĐĂNG NHẬP:</h4>
+                <p><b>Email:</b> <?php echo $info['email']; ?></p>
+                <p><b>Họ tên:</b> <?php echo $info['hoten']; ?></p>
+                <p><b>Quê quán:</b> <?php echo $info['quequan']; ?></p>
+                <p><b>Điện thoại:</b> <?php echo $info['dienthoai']; ?></p>
+                <p><b>Giới tính:</b> <?php echo $info['gioitinh']; ?></p>
+                <p><b>Sở thích:</b> <?php echo $info['sothich']; ?></p>
+                <br>
+                <a href="dangxuat.php">Đăng xuất</a>
+            <?php else: ?>
+                <p>Chào mừng bạn! Vui lòng đăng ký / đăng nhập để xem thông tin.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <footer>
+        Footer website
+    </footer>
+</div>
+
+</body>
+</html>
+
+5. File dangxuat.php (Giữ nguyên Cookie khi Đăng xuất)
+Trang đăng xuất giữ nguyên Cookie bgcolor để Header vẫn hiển thị màu sắc đã chọn ngay cả khi người dùng vừa thoát ra.
+
+PHP
+<?php
+session_start();
+
+// Chỉ hủy phiên đăng nhập, GIỮ NGUYÊN Cookie bgcolor để duy trì màu trong 10 ngày
+unset($_SESSION['is_logged_in']);
+unset($_SESSION['current_user']);
+
+header("Location: dangnhap.php");
+exit();
+?>
