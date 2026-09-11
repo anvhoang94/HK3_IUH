@@ -1,0 +1,31 @@
+-- Tạo bảng TAIKHOAN
+CREATE TABLE TAIKHOAN (
+    iduser INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    hodem VARCHAR(50),
+    ten VARCHAR(50),
+    phanquyen INT,
+    landangnhapcuoi DATETIME
+);
+
+-- Tạo bảng CONGTY
+CREATE TABLE CONGTY (
+    idcty INT AUTO_INCREMENT PRIMARY KEY,
+    tencty VARCHAR(150) NOT NULL,
+    diachi VARCHAR(255),
+    dienthoai VARCHAR(20),
+    fax VARCHAR(20)
+);
+
+-- Tạo bảng SANPHAM
+CREATE TABLE SANPHAM (
+    idsp INT AUTO_INCREMENT PRIMARY KEY,
+    tensp VARCHAR(150) NOT NULL,
+    gia DECIMAL(15,2),
+    mota TEXT,
+    hinh VARCHAR(255),
+    giamgia INT,
+    idcty INT,
+    FOREIGN KEY (idcty) REFERENCES CONGTY(idcty)
+);
