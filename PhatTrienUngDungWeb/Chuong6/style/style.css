@@ -1,0 +1,78 @@
+/* CSS Document */
+#container
+{
+	position:relative;
+	margin:0px auto;
+	height:auto;
+	width:1000px;	
+}
+#banner
+{
+	float:left;
+	height:150px;
+	width:100%;
+	background-color:#B3E0C6;	
+}
+#main
+{
+	float:left;
+	height:500px;
+	width:100%;	
+}
+#mainleft
+{
+	float:left;
+	height:500px;
+	width:150px;
+	background-color:#E3EEE1;	
+}
+#mainright
+{
+	foat:right;
+	height:500px;
+	width:848px;
+	background-color:#F2F7EE;
+}
+#footer
+{
+	float:left;
+	height:100px;
+	width:100%;
+	background-color:#CCC;
+
+}
+#sanpham
+{
+	float: left;
+	height:211px;
+	width:161px;
+	border: 1px solid #396;
+	margin-top:5px;
+	margin-left:5px;	
+}
+#sanpham_ten
+{
+	float:flex;
+	height:20px;
+	width:100%;
+	text-align:center;
+	color: #F00;
+	padding-top:5px;
+		
+}
+#sanpham_gia
+{
+	float:flex;
+	height:20px;
+	width:100%;
+	text-align:center;
+	color: #00F;
+	padding-top:5px;	
+}
+#sanpham_hinh
+{
+	float:flex;
+	height:161px;
+	width:161px;
+	text-align:center;	
+}
