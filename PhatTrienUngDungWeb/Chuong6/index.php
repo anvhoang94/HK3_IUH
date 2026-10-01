@@ -1,28 +1,35 @@
+<?php
+include('classtmdt/clstmdt.php');
+$p= new csdltmdt();
+?>
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Untitled Document</title>
-<link rel="stylesheet" type="text/css" href="style/style.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <div id="container">
 	<div id="banner"></div>
     <div id="main">
-    	<div id="mainleft"></div>
+    	<div id="mainleft">
+        <?php
+			$p->loaddscongty("select * from congty order by tencty asc");
+		?>
+        </div>
     	<div id="mainright">
-        	<div id="sanpham">
-            	<div id="sanpham_ten">Iphone</div>
-                <div id="sanpham_hinh"><img src="hinh/iphone.jpg" width"161" height="161" alt=""/></div>
-                <div id="sanpham_gia">Giá: 20 USD</div>
-             </div>
-            <div id="sanpham"></div>
-            <div id="sanpham"></div>
-            <div id="sanpham"></div>
-            <div id="sanpham"></div>
-            <div id="sanpham"></div>
-            <div id="sanpham"></div>
-            <div id="sanpham"></div> 
+        <?php
+			if(isset($_REQUEST['idcty']))
+			{
+				$idcty=$_REQUEST['idcty'];
+				$p->loaddssanpham("select * from sanpham where idcty='$idcty' order by gia asc");
+			}
+			else
+			{
+				$p->loaddssanpham("select * from sanpham order by gia asc");	
+			}	
+		?>
         </div>
     </div>
     <div id="footer"></div>
