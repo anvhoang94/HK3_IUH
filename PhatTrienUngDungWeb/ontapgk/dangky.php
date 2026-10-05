@@ -37,10 +37,9 @@ khác</p>
 <input name="sothich[]" type="checkbox" id="sothich[]" value="Xem phim">
 <label for="sothich[]">Xem phim </label>
 </p>
-<p>Ảnh đại
-diện
+<p>Ảnh đại diện
 <label for="anhdaidien">:</label>
-<input type="file" name="anhdaidien" id="anhdaidien">
+<input type="file" name="anhdaidien" id="anhdaidien" required>
 </p>
 <p>
 <input type="submit" name="dangky" id="dangky" value="Đăng ký">
