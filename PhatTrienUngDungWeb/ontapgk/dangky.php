@@ -9,43 +9,42 @@ session_start();
 </head>
 
 <body>
-<p><strong>FROM ĐĂNG KÝ THÀNH VIÊN
-</strong></p>
-<form action="xuly.php" method="post" enctype="multipart/form-data" name="form1" id="form1">
-<p>Họ và tên
-<input type="text" name="hoten" id="hoten">
+<p>THÔNG TIN ĐĂNG KÝ</p>
+<form method="post" action="xuly.php" enctype="multipart/form-data" name="form1" id="form1">
+<p>
+<label for="hoten">Họ và tên</label>
+<input name="hoten" type="text" required="required" id="hoten">
 </p>
-<p>Email
-<input type="text" name="email" id="email">
+<p>Email 
+<input name="email" type="text" required="required" id="email">
 </p>
-<p>Mật khẩu
-<input type="text" name="matkhau" id="matkhau">
+<p>
+<label for="matkhau">Mật khẩu </label><input name="matkhau" type="text" required="required" id="matkhau">
 </p>
 <p>Giới tính 
 <input name="gioitinh" type="radio" required="required" id="radio" value="Nam">
-<label for="gioitinh">Nam
+<label for="gioitinh">Nam </label>
 <input type="radio" name="gioitinh" id="radio2" value="Nữ">
-Nữ </label>
-<input type="radio" name="gioitinh" id="radio3" value="khác"> 
-khác</p>
+<label for="gioitinh">Nữ </label>
+<input type="radio" name="gioitinh" id="radio3" value="Khác">
+<label for="gioitinh">Khác</label>
+</p>
 <p>Sở thích 
 <input name="sothich[]" type="checkbox" id="sothich[]" value="Du lịch">
 <label for="sothich[]">Du lịch </label>
-<label for="gioitinh"> </label>
 <input name="sothich[]" type="checkbox" id="sothich[]" value="Nghe nhạc">
-<label for="sothich[]">Nghe nhạc</label>
+<label for="sothich[]">Nghe nhạc </label>
 <input name="sothich[]" type="checkbox" id="sothich[]" value="Xem phim">
 <label for="sothich[]">Xem phim </label>
 </p>
-<p>Ảnh đại diện
-<label for="anhdaidien">:</label>
-<input type="file" name="anhdaidien" id="anhdaidien" required>
+<p>
+<label for="anhdaidien">Ảnh đại diện :</label>
+<input name="anhdaidien" type="file" required="required" id="anhdaidien">
 </p>
 <p>
 <input type="submit" name="dangky" id="dangky" value="Đăng ký">
 <input type="reset" name="reset" id="reset" value="Nhập lại">
 </p>
 </form>
-
 </body>
 </html>
